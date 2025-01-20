@@ -5,5 +5,7 @@ This mod allows you to modify The Incinerator further through configuration file
 Currently you can modify:
 
 Basic Damage of the weapon skill;
+
 Max Health Percent Damage of the weapon skill;
+
 Charging Time.
