@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.rinko1231.incineratorstryhard.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "incineratorstryhard.refmap.json",
+  "mixins": [
+    "TheIncineratorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
