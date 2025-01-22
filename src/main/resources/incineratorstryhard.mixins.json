@@ -5,7 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "incineratorstryhard.refmap.json",
   "mixins": [
-    "TheIncineratorMixin"
+    "ClientEventMixin",
+    "TheImmolatorMixin",
+    "TheIncineratorMixin",
+    "TidalTentacleEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -49,7 +49,7 @@ public abstract class TheIncineratorMixin extends Item implements More_Tool_Attr
                 for(int l = 0; l < 10; ++l) {
                     double d2 = (double)2.25F * (double)(l + 1);
                     int j2 = (int)(1.5F * (float)l);
-                    if (this.ba_painting$modifySpawnFlameStrike(player.getX() + (double)Mth.cos(yawRadians) * d2, player.getZ() + (double)Mth.sin(yawRadians) * d2, standingOnY, headY, yawRadians, j2, j2, p_43395_, player)) {
+                    if (this.ba_painting$modifySpawnFlameStrike(player.getX() + (double)Mth.cos(yawRadians) * d2, player.getZ() + (double)Mth.sin(yawRadians) * d2, standingOnY, headY, yawRadians, j2, j2, p_43395_, IncineratorsTryHardConfig.ignisCircleRadiusForImmolator.get().floatValue(), player)) {
                         hasSucceeded = true;
                     }
                 }
@@ -69,7 +69,7 @@ public abstract class TheIncineratorMixin extends Item implements More_Tool_Attr
 
 
     @Unique
-    private boolean ba_painting$modifySpawnFlameStrike(double x, double z, double minY, double maxY, float rotation, int wait, int delay, Level world, LivingEntity player) {
+    private boolean ba_painting$modifySpawnFlameStrike(double x, double z, double minY, double maxY, float rotation, int wait, int delay, Level world, float radius, LivingEntity player) {
         BlockPos blockpos = BlockPos.containing(x, maxY, z);
         boolean flag = false;
         double d0 = 0.0F;
@@ -94,7 +94,7 @@ public abstract class TheIncineratorMixin extends Item implements More_Tool_Attr
         } while (blockpos.getY() >= minY);
 
         if (flag) {
-            world.addFreshEntity(new Flame_Strike_Entity(world, x, blockpos.getY() + d0, z, rotation, 40, wait, delay, (float) 1.0, (float) IncineratorsTryHardConfig.basicSkillDamage.get().doubleValue(), (float) IncineratorsTryHardConfig.maxHealthDamagePercent.get().doubleValue(), false, player));
+            world.addFreshEntity(new Flame_Strike_Entity(world, x, blockpos.getY() + d0, z, rotation, 40, wait, delay, radius, IncineratorsTryHardConfig.basicSkillDamage.get().floatValue(), IncineratorsTryHardConfig.maxHealthDamagePercent.get().floatValue(), false, player));
             return true;
         } else {
             return false;
