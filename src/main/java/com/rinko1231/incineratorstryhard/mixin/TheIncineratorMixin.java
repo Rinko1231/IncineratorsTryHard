@@ -49,7 +49,7 @@ public abstract class TheIncineratorMixin extends Item implements More_Tool_Attr
                 for(int l = 0; l < 10; ++l) {
                     double d2 = (double)2.25F * (double)(l + 1);
                     int j2 = (int)(1.5F * (float)l);
-                    if (this.ba_painting$modifySpawnFlameStrike(player.getX() + (double)Mth.cos(yawRadians) * d2, player.getZ() + (double)Mth.sin(yawRadians) * d2, standingOnY, headY, yawRadians, j2, j2, p_43395_, IncineratorsTryHardConfig.ignisCircleRadiusForImmolator.get().floatValue(), player)) {
+                    if (this.ba_painting$modifySpawnFlameStrike(player.getX() + (double)Mth.cos(yawRadians) * d2, player.getZ() + (double)Mth.sin(yawRadians) * d2, standingOnY, headY, yawRadians, j2, j2, p_43395_, IncineratorsTryHardConfig.ignisCircleRadius.get().floatValue(), player)) {
                         hasSucceeded = true;
                     }
                 }
