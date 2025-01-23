@@ -3,7 +3,7 @@ loaderVersion="[43,)" #mandatory This is typically bumped every Minecraft versio
 license="GPLv3"
 [[mods]] #mandatory
 modId="incineratorstryhard" #mandatory
-version="1.20.1-1.0.2" #mandatory
+version="1.20.1-1.0.3" #mandatory
 displayName="Cataclysm: Incinerator's Try Hard" #mandatory
 authors="Rinko1231" #optional
 description="Custom the damage, ignic circle and charging time of the Incinerator, The Immolator and Tidal Claws!"

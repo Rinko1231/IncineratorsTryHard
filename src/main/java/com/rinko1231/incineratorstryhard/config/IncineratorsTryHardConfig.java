@@ -24,6 +24,8 @@ public class IncineratorsTryHardConfig
 
     public static ForgeConfigSpec.DoubleValue TidalClawsTentacleDamage;
 
+    public static ForgeConfigSpec.DoubleValue ChargeDamageMultiplierOfGauntletOfBulwark;
+
 
     static
     {
@@ -72,6 +74,14 @@ public class IncineratorsTryHardConfig
 
         TidalClawsTentacleDamage = BUILDER
                 .defineInRange("Tentacle Damage released by Tidal Claws", 3.0,0.0, Double.MAX_VALUE);
+
+        BUILDER.pop();
+
+        BUILDER.push("Gauntlet of Bulwark");
+
+        ChargeDamageMultiplierOfGauntletOfBulwark = BUILDER
+                .defineInRange("Charge Damage Multiplier Of Gauntlet Of Bulwark", 1.2,1.0, Double.MAX_VALUE);
+
 
         SPEC = BUILDER.build();
     }

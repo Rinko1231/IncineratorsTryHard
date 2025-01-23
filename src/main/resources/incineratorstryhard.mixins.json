@@ -6,6 +6,7 @@
   "refmap": "incineratorstryhard.refmap.json",
   "mixins": [
     "ClientEventMixin",
+    "GauntletOfBulwarkMixin",
     "TheImmolatorMixin",
     "TheIncineratorMixin",
     "TidalTentacleEntityMixin"
