@@ -155,7 +155,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jei-238222:5547872")
     runtimeOnly fg.deobf("curse.maven:jade-324717:5776962")
     runtimeOnly fg.deobf("curse.maven:curios-309927:6058834")
-    implementation fg.deobf("curse.maven:lendercataclysm-551586:6092874")
+    implementation fg.deobf("curse.maven:lendercataclysm-551586:6208724")
     implementation fg.deobf("curse.maven:lionfish-api-1001614:5922047")
     //runtimeOnly fg.deobf("curse.maven:new-shield-variants-884272:5747547")
     //runtimeOnly fg.deobf("curse.maven:monolib-968432:5443121")

@@ -3,14 +3,18 @@ package com.rinko1231.incineratorstryhard.mixin;
 import com.github.L_Ender.cataclysm.config.CMConfig;
 import com.github.L_Ender.cataclysm.entity.effect.Flame_Strike_Entity;
 import com.github.L_Ender.cataclysm.entity.effect.ScreenShake_Entity;
+import com.github.L_Ender.cataclysm.init.ModSounds;
 import com.github.L_Ender.cataclysm.items.The_Immolator;
 import com.rinko1231.incineratorstryhard.config.IncineratorsTryHardConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,13 +23,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = The_Immolator.class)
+@Mixin(value = The_Immolator.class, remap = false)
 public abstract class TheImmolatorMixin extends Item {
 
 
@@ -36,8 +38,12 @@ public abstract class TheImmolatorMixin extends Item {
     @Shadow
     public abstract int getUseDuration(@NotNull ItemStack p_77626_1_);
 
-    @Inject(method = "releaseUsing", at = @At("HEAD"), cancellable = true)
-    public void releaseUsing(ItemStack p_43394_, Level p_43395_, LivingEntity p_43396_, int p_43397_, CallbackInfo ci) {
+    /**
+     * @author Rinko1231
+     * @reason Tweak
+     */
+    @Overwrite
+    public void releaseUsing(ItemStack p_43394_, Level p_43395_, LivingEntity p_43396_, int p_43397_) {
         if (p_43396_ instanceof Player player) {
             int i = this.getUseDuration(p_43394_) - p_43397_;
             boolean hasSucceeded = false;
@@ -61,7 +67,6 @@ public abstract class TheImmolatorMixin extends Item {
                 }
             }
         }
-      ci.cancel();
     }
 
 @Unique
@@ -98,8 +103,52 @@ private boolean ba_painting$spawnFlameStrike(double x, double z, double minY, do
 }
 
 
+/**
+ * @author Rinko1231
+ * @reason Tweak
+ */
+@Overwrite
+public void onUseTick(Level worldIn, LivingEntity livingEntityIn, ItemStack stack, int count) {
+    int i = this.getUseDuration(stack) - count;
+    int iMul = IncineratorsTryHardConfig.chargingTimeForImmolator.get()/45;
+    if (i == 10*iMul) {
+        this.masseffectParticle(worldIn, livingEntityIn, 2.0F);
+    }
+
+    if (i == 20*iMul) {
+        this.masseffectParticle(worldIn, livingEntityIn, 3.5F);
+    }
+
+    if (i == 30*iMul) {
+        this.masseffectParticle(worldIn, livingEntityIn, 5.0F);
+    }
+
+    if (i == 45*iMul) {
+        livingEntityIn.playSound((SoundEvent) ModSounds.MALEDICTUS_SHORT_ROAR.get(), 1.0F, 1.0F);
+    }
+
+}
+
+/**
+ * @author Rinko1231
+ * @reason Tweak
+ */
+@Overwrite
+    private void yall(Level world, LivingEntity caster) {
+        double radius = IncineratorsTryHardConfig.quakeRangeForImmolator.get();
+        ScreenShake_Entity.ScreenShake(world, caster.position(), 30.0F, 0.1F, 0, 30);
+        world.playSound((Player)null, caster.getX(), caster.getY(), caster.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.5F, 1.0F / (caster.getRandom().nextFloat() * 0.4F + 0.8F));
+
+        for(Entity entity : world.getEntities(caster, caster.getBoundingBox().inflate(radius, radius, radius))) {
+            if (entity instanceof LivingEntity) {
+                entity.hurt(world.damageSources().mobAttack(caster), (float)caster.getAttributeValue(Attributes.ATTACK_DAMAGE) * IncineratorsTryHardConfig.quakeDamageMultiplierForImmolator.get().floatValue());
+            }
+        }
+
+    }
 
 
+    @Shadow protected abstract void masseffectParticle(Level worldIn, LivingEntity livingEntityIn, float v);
 
 
 }
